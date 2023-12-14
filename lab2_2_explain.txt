@@ -1,0 +1,58 @@
+#include <stdlib.h>
+#include <iostream>
+
+struct TwoInts
+{
+    int a;
+    int b;
+};
+
+struct StructWithArray
+{
+    int arr[4];
+    int* someNumber;
+};
+
+int main()
+{
+    TwoInts i2 = { }; 
+    i2.a = 5; 
+    i2.b = 7;  
+
+    std::cout << i2.a << std::endl; // Afișează valoarea lui 'a' (5)
+    std::cout << i2.b << std::endl; // Afișează valoarea lui 'b' (7)
+    
+    StructWithArray s = { }; // Initializare 0 in array si nullptr pentru pointer
+    s.arr[0] = 10; // Setează primul element din array-ul 'arr' al structurii s la 10
+
+    StructWithArray s1 = { }; // Inițializează o altă variabilă de tipul StructWithArray cu valorile implicite
+    s1.arr[0] = 15; // Setează primul element din array-ul 'arr' al structurii s1 la 15
+
+    StructWithArray* sPointer = &s; // Inițializează un pointer la o structură de tipul StructWithArray și îl leagă de adresa variabilei 's'
+    sPointer->arr[0] = 20; // Modifică primul element din array-ul 'arr' al structurii s folosind pointerul
+
+    std::cout << s.arr[0] << std::endl; // Afișează primul element din array-ul 'arr' al structurii s (20)
+    s.arr[0] = 25;
+    std::cout << s.arr[0] << std::endl; // Afișează noul primul element din array-ul 'arr' al structurii s (25) din cauza schimbarii de mai sus in linia 35
+    sPointer->arr[0] = 30; 
+    std::cout << s.arr[0] << std::endl; // Afișează valoarea actuală a primului element din array-ul 'arr' al structurii s (30) linia 37, se modifica valoarea
+
+    sPointer = &s1; 
+    sPointer->arr[0] = 35; // Modifică primul element din array-ul 'arr' al structurii s1 folosind pointerul
+    std::cout << s.arr[0] << std::endl; //  s (30 - nu s-a schimbat = sPointer = s1)
+    std::cout << s1.arr[0] << std::endl; //  s1 (35)
+
+    StructWithArray structArray[2] = { }; 
+    structArray[0].arr[3] = 77; // Setează al patrulea element din array-ul 'arr' al primei structuri din array la 77
+    structArray[1].someNumber = &structArray[0].arr[3];
+
+    sPointer = &s; 
+    int* pointer = &sPointer->arr[3];
+    s.arr[3] = 72; // Setează al patrulea element din array-ul 'arr' al structurii s la 72
+    std::cout << *pointer; // Afișează valoarea la care pointează pointerul (72)
+
+    StructWithArray memory;
+    memset(&memory, 0, sizeof(StructWithArray));
+
+    return 0; 
+}
